@@ -1,7 +1,5 @@
 #! /usr/bin/env python3
 # Serafina Yu
-# CPSC 386-02
-# 2023-02-12
 # serafyu@csu.fullerton.edu
 # @serafinayu
 #
@@ -57,18 +55,22 @@ def main():
     # Set an instance of Chrome WebDriver
     driver = webdriver.Chrome()
     # Navigate to the provided URL and wait til the page is fully loaded before returning control to the rest of the script
-    driver.implicitly_wait(20)
+    driver.implicitly_wait(10)
     driver.get(URL)
     # Assert an error if "Target" is not in the title
     assert "Target" in driver.title
     body = driver.find_element(By.CSS_SELECTOR, 'body')
-    for x in range(0,2):
-        body.send_keys(Keys.PAGE_DOWN)
     # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     try:
         elements = driver.find_elements(By.CLASS_NAME, "cbOry")
+        for x in range(0,3):
+            body.send_keys(Keys.PAGE_DOWN)
+            elements2 = driver.find_elements(By.CLASS_NAME, "cbOry")
+            elements = elements + elements2
+            # elements = set(elements)
         # elements = driver.find_elements(By.CLASS_NAME, "dOpyUp")
         count = 0
+        print(elements)
         for item in elements:
             print(count, item.text)
             count += 1
